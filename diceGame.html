@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dice Game</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b); /* Gradient background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #fff;
+        }
+
+        /* Container Styling */
+        #container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9); /* Slightly transparent white background */
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        /* Heading Styling */
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: #ff6f61; /* Color for heading */
+        }
+
+        /* Dice Styling */
+        .dice {
+            display: inline-block;
+            margin: 20px;
+            padding: 20px;
+            background: #f0f0f0;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .dice p {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .dice img {
+            width: 150px;
+            height: 150px;
+        }
+
+        /* Button Styling */
+        .button {
+            margin: 20px;
+        }
+
+        .btn {
+            background-color: #28a745; /* Green background */
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+
+        .btn:active {
+            background-color: #1e7e34; /* Even darker green on click */
+            transform: scale(0.98); /* Slightly shrink the button on click */
+        }
+
+        /* Result Styling */
+        .result {
+            font-size: 2em;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #ff6f61; /* Color for result text */
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Let's Play</h1>
+
+        <div class="dice">
+            <p class="Player1">Player1</p>
+            <img src="dice6.png" alt="dice 6" class="img1">
+        </div>
+        <div class="dice">
+            <p class="Player2">Player2</p>
+            <img src="dice6.png" alt="dice 6" class="img2">
+        </div>
+
+        <div class="button">
+            <button type="button" class="btn" onclick="RollTheDice()">Roll The Dice</button>
+        </div>
+        <div class="button">
+            <button type="button" class="btn" onclick="EditNames()">Edit Your Name</button>
+        </div>
+        <div class="result">
+            <!-- Result will be displayed here -->
+        </div>
+    </div>
+    <script>
+        //player Name
+        let Player1 = "Player1";
+        let Player2 = "Player2";
+        
+        function EditNames() {
+            Player1 = prompt("Change Player1 name");
+            Player2 = prompt("Change Player2 name");
+
+            if (Player1.length < 1 || Player2.length < 1) {
+                alert('Please enter a valid name');
+                return;
+            }
+            document.querySelector("p.Player1").innerHTML = Player1;
+            document.querySelector("p.Player2").innerHTML = Player2;
+        }
+
+        function RollTheDice() {
+            let diceNum1 = document.querySelector(".img1");
+            let diceNum2 = document.querySelector(".img2");
+
+            diceNum1.setAttribute("src", "diceroll.gif");
+            diceNum2.setAttribute("src", "diceroll.gif");
+
+            let result = document.querySelector('.result');
+            setTimeout(() => {
+                let randomNumber1 = Math.floor(Math.random() * 6) + 1;
+                let randomNumber2 = Math.floor(Math.random() * 6) + 1;
+
+                diceNum1.setAttribute('src', 'dice' + randomNumber1 + '.png');
+                diceNum2.setAttribute('src', 'dice' + randomNumber2 + '.png');
+
+                // Determine the winner
+                if (randomNumber1 === randomNumber2) {
+                    result.innerHTML = "Draw!";
+                } else if (randomNumber1 > randomNumber2) {
+                    result.innerHTML = Player1 + " Wins!";
+                } else {
+                    result.innerHTML = Player2 + " Wins!";
+                }
+
+            }, 2500);
+        }
+    </script>
+</body>
+</html>
